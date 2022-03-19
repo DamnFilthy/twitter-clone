@@ -2,12 +2,7 @@
   <div class="top-bar__wrapper">
     <div><router-link to="/">Home</router-link></div>
 
-    <div class="not-auth" v-if="isLoggedIn === null || isLoggedIn === false">
-      <router-link :to="{name: 'register'}">Регистрация</router-link>
-      <router-link :to="{name: 'login'}">Войти</router-link>
-    </div>
-
-    <div class="top-bar__login-bar" v-else>
+    <div class="top-bar__login-bar" v-if="isLoggedIn">
       <router-link
         :to="{name: 'profile', params: {slug: currentUser.username}}"
       >
@@ -18,17 +13,25 @@
       <router-link :to="{name: 'createArticle'}">Create Article</router-link>
       <div class="logout-link" @click.prevent="logout">Выйти</div>
     </div>
+    <div class="not-auth" v-else>
+      <router-link :to="{name: 'register'}">Регистрация</router-link>
+      <router-link :to="{name: 'login'}">Войти</router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
+import {getterTypes} from '../store/modules/auth'
 export default {
   name: 'AppTopBar',
   computed: {
     ...mapState({
       currentUser: (state) => state.auth.user,
-      isLoggedIn: (state) => state.auth.isLoggedIn,
+    }),
+    ...mapGetters({
+      isLoggedIn: getterTypes.isLoggedIn,
     }),
   },
   methods: {

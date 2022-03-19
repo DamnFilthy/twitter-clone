@@ -5,7 +5,7 @@ const state = {
   user: null,
   errors: null,
   isSubmitting: false,
-  isLoggedIn: null,
+  isLoggedIn: false,
 }
 
 export const mutationTypes = {
@@ -33,9 +33,6 @@ const getters = {
   },
   [getterTypes.isLoggedIn]: (state) => {
     return Boolean(state.isLoggedIn)
-  },
-  [getterTypes.isAnonimus]: (state) => {
-    return state.isLoggedIn === false
   },
 }
 

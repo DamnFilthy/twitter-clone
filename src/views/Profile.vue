@@ -11,6 +11,7 @@
 
 <script>
 import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 import getterTypes from '@/store/modules/auth'
 export default {
   name: 'AppProfile',
@@ -18,9 +19,9 @@ export default {
     ...mapState({
       isLoggedIn: (state) => state.auth.isLoggedIn,
     }),
-    currentUser() {
-      return this.$store.getters[getterTypes.currentUser]
-    },
+    ...mapGetters({
+      currentUser: getterTypes.currentUser,
+    }),
   },
 }
 </script>
