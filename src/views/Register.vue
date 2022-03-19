@@ -46,9 +46,7 @@
         </button>
 
         <div class="login-link">
-          <router-link :to="{name: 'login'}"
-            >Have an account? let`s login in</router-link
-          >
+          <router-link :to="{name: 'login'}">Уже есть аккаунт?</router-link>
         </div>
       </form>
     </div>
@@ -58,6 +56,8 @@
 <script>
 import Spinner from '@/components/Spinner'
 import AppValidationErrors from '@/components/ValidationErrors'
+import {actionTypes} from '@/store/modules/auth'
+import {mapState} from 'vuex'
 
 export default {
   name: 'AppRegister',
@@ -70,12 +70,10 @@ export default {
     }
   },
   computed: {
-    isSubmitting() {
-      return this.$store.state.auth.isSubmitting
-    },
-    isErrors() {
-      return this.$store.state.auth.errors
-    },
+    ...mapState({
+      isSubmitting: (state) => state.auth.isSubmitting,
+      isErrors: (state) => state.auth.errors,
+    }),
   },
   methods: {
     onSubmit() {
@@ -84,7 +82,7 @@ export default {
         email: this.email,
         password: this.password,
       }
-      this.$store.dispatch('register', user).then(() => {
+      this.$store.dispatch(actionTypes.register, user).then(() => {
         this.username = null
         this.email = null
         this.password = null
@@ -92,10 +90,13 @@ export default {
       })
     },
   },
+  mounted() {
+    this.$store.state.auth.errors = null
+  },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .wrapper {
   width: 100%;
   height: 60vh;
@@ -113,7 +114,10 @@ export default {
   letter-spacing: 1px;
 }
 
-.form-input,
+.form-input {
+  letter-spacing: 1px;
+  font-size: 16px;
+}
 .form-button {
   height: 40px;
   width: 130px;

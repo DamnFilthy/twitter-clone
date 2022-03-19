@@ -1,11 +1,17 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link :to="{name: 'register'}">Register</router-link>
+    <AppTopBar />
   </div>
   <router-view />
 </template>
+
+<script>
+import AppTopBar from '@/components/TopBar'
+export default {
+  name: 'App',
+  components: {AppTopBar},
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -19,11 +25,18 @@
 #nav {
   padding: 30px;
   a {
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
     color: #2c3e50;
-
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
     &.router-link-exact-active {
       color: #42b983;
+    }
+    img {
+      margin-right: 10px;
     }
   }
 }
