@@ -1,6 +1,6 @@
 <template>
   <div class="top-bar__wrapper">
-    <div><router-link to="/">Home</router-link></div>
+    <div><router-link :to="{name: 'globalFeed'}">Home</router-link></div>
 
     <div class="top-bar__login-bar" v-if="isLoggedIn">
       <router-link

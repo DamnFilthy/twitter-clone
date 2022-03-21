@@ -2,10 +2,6 @@
   <div v-if="isLoggedIn">Profile</div>
   <div v-else>
     <h2>Это страница для зарегистрированных пользователей</h2>
-    <div>
-      <router-link :to="{name: 'register'}">Регистрация</router-link>
-      <router-link :to="{name: 'login'}">Войти</router-link>
-    </div>
   </div>
 </template>
 

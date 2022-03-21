@@ -6,6 +6,7 @@ const state = {
   errors: null,
   isSubmitting: false,
   isLoggedIn: false,
+  isLoading: false,
 }
 
 export const mutationTypes = {
@@ -16,11 +17,16 @@ export const mutationTypes = {
   loginStart: '[auth] loginStart',
   loginSuccess: '[auth] loginSuccess',
   loginFailure: '[auth] loginFailure',
+
+  getCurrentUserStart: '[auth] getCurrentUserStart',
+  getCurrentUserSuccess: '[auth] getCurrentUserSuccess',
+  getCurrentUserFailure: '[auth] getCurrentUserFailure',
 }
 
 export const actionTypes = {
   register: '[auth] register',
   login: '[auth] login',
+  getCurrentUser: '[auth] getCurrentUser',
 }
 export const getterTypes = {
   currentUser: '[auth] currentUser',
@@ -66,6 +72,20 @@ const mutations = {
     state.isSubmitting = false
     state.errors = errors
   },
+
+  [mutationTypes.getCurrentUserStart](state) {
+    state.isLoading = true
+  },
+  [mutationTypes.getCurrentUserSuccess](state, payload) {
+    state.isLoading = false
+    state.currentUser = payload
+    state.isLoggedIn = true
+  },
+  [mutationTypes.getCurrentUserFailure](state) {
+    state.currentUser = null
+    state.isLoading = false
+    state.isLoggedIn = false
+  },
 }
 
 const actions = {
@@ -102,6 +122,23 @@ const actions = {
             mutationTypes.loginFailure,
             errors.response.data.errors
           )
+        })
+    })
+  },
+  [actionTypes.getCurrentUser](context) {
+    return new Promise((resolve) => {
+      context.commit(mutationTypes.getCurrentUserStart)
+      authApi
+        .getCurrentUser()
+        .then((response) => {
+          context.commit(
+            mutationTypes.getCurrentUserSuccess,
+            response.data.user
+          )
+          resolve(response.data.user)
+        })
+        .catch(() => {
+          context.commit(mutationTypes.getCurrentUserFailure)
         })
     })
   },

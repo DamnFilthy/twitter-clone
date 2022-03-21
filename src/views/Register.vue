@@ -17,6 +17,7 @@
             class="form-input"
             v-model="username"
             required
+            autocomplete="on"
           />
           <label class="form-label"> Username </label>
         </div>
@@ -27,6 +28,7 @@
             class="form-input"
             v-model="email"
             required
+            autocomplete="on"
           />
           <label class="form-label"> Email </label>
         </div>
@@ -37,6 +39,7 @@
             class="form-input"
             v-model="password"
             required
+            autocomplete="on"
           />
           <label class="form-label"> Password </label>
         </div>
@@ -86,7 +89,7 @@ export default {
         this.username = null
         this.email = null
         this.password = null
-        this.$router.push({name: 'home'})
+        this.$router.push({name: 'globalFeed'})
       })
     },
   },
